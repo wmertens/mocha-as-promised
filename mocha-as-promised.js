@@ -101,7 +101,11 @@
                                     // On rejection, make sure there's a rejection reason, then call `done` with it.
                                     if (reason === null || reason === undefined) {
                                         reason = new Error("Promise rejected with no rejection reason.");
+                                    } else if (! reason instanceof Error) {
+                                        // Mocha wants errors to be Errors
+                                        reason = new Error(JSON.stringify(reason));
                                     }
+
                                     done(reason);
                                 }
                             );
